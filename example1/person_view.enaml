@@ -1,0 +1,31 @@
+from enaml.widgets.api import Window, Label, Field, Form, PushButton
+from enaml.stdlib.fields import IntField
+
+from person import Person
+
+enamldef PersonForm(Form): person_form:
+    attr person
+    Label:
+        text = 'First Name'
+    Field:
+        text := person.first_name
+    Label:
+        text = 'Last Name'
+    Field:
+        text := person.last_name
+    Label:
+        text = 'Age'
+    IntField:
+        minimum = 0
+        value := person.age
+    PushButton:
+        text = 'Switch'
+        clicked ::
+            person_form.person = Person(first_name='Joe', last_name='Blow', age=55, debug=True)
+
+
+
+enamldef PersonView(Window):
+    attr person
+    PersonForm:
+        person := parent.person
